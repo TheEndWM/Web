@@ -29,7 +29,12 @@ h1 {
      <tr>
       <th>
         <h2>Hello Github world !!!</h2>
-        <p>Your IP: <?php echo $_SERVER['REMOTE_ADDR'] ?> </p>
+        <p>Your IP: 
+	      <script type="text/javascript">
+		var ipAddress = '<!--#echo var="REMOTE_ADDR"-->';
+		alert (ipAddress);
+		</script>
+	 </p>
       </th>
      </tr>
      <tr>
