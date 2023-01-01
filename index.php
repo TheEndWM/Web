@@ -30,10 +30,10 @@ h1 {
       <th>
         <h2>Hello Github world !!!</h2>
         <p>Your IP: 
-	      <script type="text/javascript">
-		var ipAddress = '<!--#echo var="REMOTE_ADDR"-->';
-		alert (ipAddress);
-		</script>
+	      <?php
+ 		$ipaddress = getenv("REMOTE_ADDR") ;
+ 		Echo "Your IP Address is " . $ipaddress;
+	      ?>
 	 </p>
       </th>
      </tr>
