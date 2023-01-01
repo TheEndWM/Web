@@ -31,6 +31,11 @@ h1 {
         <p> 
 	    <iframe src="https://www.whatismybrowser.com/feature/iframe?size=small&bgcolor=5F9EA0&ip_address=true" height="150" scrolling="no" style="border: none;"></iframe> 
 	 </p>
+	      <?php
+                 $ipaddress = getenv("REMOTE_ADDR") ;
+                 Echo "Your IP Address is " . $ipaddress;
+              ?>
+	      
       </th>
      </tr>
      <tr>
