@@ -29,7 +29,7 @@ h1 {
      <tr>
       <th>
         <h2>Hello Github world !!!</h2>
-        <p>Your Public IP address is: <? echo $_SERVER["REMOTE_ADDR"]; ?></p>
+        <p>Your IP address is: <? echo $_SERVER["REMOTE_ADDR"]; ?></p>
       </th>
      </tr>
      <tr>
