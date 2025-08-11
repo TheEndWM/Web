@@ -1,0 +1,13 @@
+# TechWM-Network_BlockList,personal Block list for Home network
+# Created 2025-08-10
+# Updated 2025-08-10
+
+# Block Tiktok
+tiktok.com
+tiktokcdn.com
+musical.ly
+byteoversea.com
+bytecdn.cn
+p16-tiktokcdn-com.akamaized.net #Tiktok
+ibytedtos.com
+snssdk.com
